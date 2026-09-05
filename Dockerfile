@@ -30,6 +30,6 @@ ENV PATH=/home/paraskun/.nix-profile/bin:$PATH
 ENV PATH=/run/current-system/sw/bin:$PATH
 ENV PATH=/nix/var/nix/profiles/default/bin:$PATH
 ENV NIX_CONFIG="experimental-features = nix-command flakes"
-RUN nix run home-manager -- switch --flake .#container@amd
+RUN nix run home-manager -- switch --flake .#container@arm
 
 WORKDIR /home/paraskun

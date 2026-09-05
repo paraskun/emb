@@ -1,0 +1,29 @@
+[package]
+name = "blinky"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+cortex-m = { version = "0.7.9", features = ["inline-asm"] }
+cortex-m-rt = "0.7.6"
+embassy-time = "0.5.1"
+panic-halt = "1.0.0"
+
+[dependencies.embassy-executor]
+version = "0.10.0"
+
+[dependencies.embassy-rp]
+version = "0.10.0"
+features = [
+  "rp2040",
+  "time-driver",
+  "executor-thread",
+  "critical-section-impl",
+  "executor-interrupt",
+]
+
+[profile.dev]
+panic = "abort"
+
+[profile.release]
+panic = "abort"
