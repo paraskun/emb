@@ -1,49 +1,10 @@
+use shared::typ::Digit;
+
 use embassy_rp::pio;
 use embassy_rp::Peri;
 
-use core::convert::From;
 use core::convert::Into;
-use core::default::Default;
-use core::ops::{Add, AddAssign, Rem};
-use core::option::Option::None;
 use core::iter::Iterator;
-
-#[derive(Clone, Copy)]
-pub struct Digit(u8);
-
-impl Digit {
-    pub fn new(v: u8) -> Digit {
-        Digit(v % 10)
-    }
-}
-
-impl Add for Digit {
-    type Output = Self;
-
-    fn add(self, rhs: Self) -> Self {
-        Digit(self.0 + rhs.0)
-    }
-}
-
-impl AddAssign for Digit {
-    fn add_assign(&mut self, rhs: Self) {
-        self.0 = (self.0 + rhs.0) % 10;
-    }
-}
-
-impl Rem for Digit {
-    type Output = Self;
-
-    fn rem(self, rhs: Self) -> Self {
-        Digit(self.0 % rhs.0)
-    }
-}
-
-impl From<Digit> for usize {
-    fn from(value: Digit) -> Self {
-        return value.0 as usize;
-    }
-}
 
 const MAP: [u8; 10] = [
 //  0babcdefgP
@@ -101,7 +62,7 @@ impl<'a, PIO: pio::Instance> Led<'a, PIO> {
             nop                 side 0b01 [1] ; clock
             jmp y-- loop1       side 0b00 [1]
             nop                 side 0b10 [1] ; latch
-            set pins, 0b0111    side 0b00 [1]
+            set pins, 0b0111    side 0b00 [3]
         
             set pins, 0b1111    side 0b00 [1]
             set y, 7            side 0b00 [1]
@@ -110,7 +71,7 @@ impl<'a, PIO: pio::Instance> Led<'a, PIO> {
             nop                 side 0b01 [1] ; clock
             jmp y-- loop2       side 0b00 [1]
             nop                 side 0b10 [1] ; latch
-            set pins, 0b1011    side 0b00 [1]
+            set pins, 0b1011    side 0b00 [3]
         
             set pins, 0b1111    side 0b00 [1]
             set y, 7            side 0b00 [1]
@@ -119,7 +80,7 @@ impl<'a, PIO: pio::Instance> Led<'a, PIO> {
             nop                 side 0b01 [1] ; clock
             jmp y-- loop3       side 0b00 [1]
             nop                 side 0b10 [1] ; latch
-            set pins, 0b1101    side 0b00 [1]
+            set pins, 0b1101    side 0b00 [3]
         
             set pins, 0b1111    side 0b00 [1]
             set y, 7            side 0b00 [1]
@@ -152,7 +113,7 @@ impl<'a, PIO: pio::Instance> Led<'a, PIO> {
     
         Led {
             pio: pio,
-            dig: [Digit(0), Digit(0), Digit(0), Digit(0)],
+            dig: [Digit::new(0), Digit::new(0), Digit::new(0), Digit::new(0)],
             ind: [false, false, false, false],
         }
     }

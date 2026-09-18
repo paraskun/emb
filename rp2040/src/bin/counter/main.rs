@@ -1,5 +1,5 @@
-#![no_main]
 #![no_std]
+#![no_main]
 
 use embassy_executor::Spawner;
 use embassy_rp::gpio;
@@ -9,7 +9,7 @@ use embassy_time::Timer;
 use embassy_futures::select;
 use panic_halt as _;
 
-use emb::pal::led::{Led, Digit};
+use rp2040::pal::led::{Led};
 
 embassy_rp::bind_interrupts!(struct Irqs {
     PIO0_IRQ_0 => pio::InterruptHandler<peripherals::PIO0>;
@@ -50,7 +50,7 @@ async fn main(_spawner: Spawner) {
                 led.ind[cur] = true;
             }
             select::Either::Second(_) => {
-                led.dig[cur] += Digit::new(1);
+                led.dig[cur] += 1;
             }
         }
 

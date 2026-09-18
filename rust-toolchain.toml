@@ -1,2 +1,6 @@
 [toolchain]
-targets = [ "thumbv6m-none-eabi" ]
+channel = "stable"
+targets = [
+  "thumbv6m-none-eabi",
+  "riscv32imc-unknown-none-elf",
+]

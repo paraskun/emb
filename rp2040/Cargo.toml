@@ -1,0 +1,26 @@
+[package]
+name = "rp2040"
+edition = "2024"
+version = "0.1.0"
+
+[dependencies]
+shared = { path = "../shared" }
+cortex-m = {
+  version = "0.7.9",
+  features = [ "inline-asm" ],
+}
+cortex-m-rt = "0.7.6"
+embassy-rp = {
+  version = "0.10.0",
+  features = [
+    "rp2040",
+    "time-driver",
+    "executor-thread",
+    "critical-section-impl",
+    "executor-interrupt",
+  ],
+}
+embassy-executor = { workspace = true }
+embassy-time = { workspace = true }
+embassy-futures = { workspace = true }
+panic-halt = { workspace = true }
