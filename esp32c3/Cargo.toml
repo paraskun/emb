@@ -5,12 +5,20 @@ version = "0.1.0"
 
 [dependencies]
 shared = { path = "../shared" }
-embassy-executor = { workspace = true }
+embassy-executor = { workspace = true, features = [ "defmt" ] }
 embassy-time = { workspace = true }
-embassy-net = { workspace = true }
+embassy-net = { workspace = true, features = [ "defmt" ] }
 esp-hal = { version = "1.2.2", features = [ "esp32c3", "unstable" ] }
 esp-rtos = { version = "0.4.0", features = [ "esp32c3", "embassy", "esp-radio" ] }
-esp-radio = { version = "1.0.0-beta.1", features = [ "esp32c3", "wifi" ] }
+esp-radio = { version = "1.0.0-beta.1", features = [ "esp32c3", "wifi", "defmt" ] }
 esp-bootloader-esp-idf = { version = "0.6.0", features = [ "esp32c3" ] }
-static_cell.workspace = true
-panic-halt = { workspace = true }
+esp-alloc = { version = "0.11.0", features = [
+  "esp32c3",
+  "global-allocator",
+  "compat",
+  "defmt",
+] }
+esp-backtrace = { version = "0.20.0", features = [ "esp32c3", "panic-handler", "defmt" ] }
+esp-println = { version = "0.18.0", features = [ "esp32c3", "defmt-espflash" ]}
+defmt = { workspace = true }
+static_cell = { workspace = true }

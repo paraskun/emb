@@ -5,7 +5,10 @@ use embassy_executor::Spawner;
 use embassy_time::Timer;
 use esp_hal::gpio::{Level, Output, OutputConfig};
 use esp_hal::timer::timg::TimerGroup;
-use panic_halt as _;
+
+use esp_backtrace as _;
+use esp_println as _;
+use esp_alloc as _;
 
 esp_bootloader_esp_idf::esp_app_desc!();
 

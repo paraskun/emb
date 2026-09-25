@@ -14,6 +14,7 @@
         rustup
         cargo
         rustc
+        espflash
       ];
     };
   };
