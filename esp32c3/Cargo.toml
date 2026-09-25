@@ -2,3 +2,15 @@
 name = "esp32c3"
 edition = "2024"
 version = "0.1.0"
+
+[dependencies]
+shared = { path = "../shared" }
+embassy-executor = { workspace = true }
+embassy-time = { workspace = true }
+embassy-net = { workspace = true }
+esp-hal = { version = "1.2.2", features = [ "esp32c3", "unstable" ] }
+esp-rtos = { version = "0.4.0", features = [ "esp32c3", "embassy", "esp-radio" ] }
+esp-radio = { version = "1.0.0-beta.1", features = [ "esp32c3", "wifi" ] }
+esp-bootloader-esp-idf = { version = "0.6.0", features = [ "esp32c3" ] }
+static_cell.workspace = true
+panic-halt = { workspace = true }

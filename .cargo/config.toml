@@ -5,4 +5,7 @@ rustflags = [
 ]
 
 [target.riscv32imc-unknown-none-elf]
-rustflags = []
+rustflags = [
+  "-C", "link-arg=-Tlinkall.x",
+  "-C", "force-frame-pointers",
+]
