@@ -5,6 +5,13 @@ version = "0.1.0"
 
 [dependencies]
 shared = { path = "../shared" }
+
+embassy-executor = { workspace = true }
+embassy-time = { workspace = true }
+embassy-futures = { workspace = true }
+panic-halt = { workspace = true }
+fixed = { workspace = true }
+
 cortex-m = {
   version = "0.7.9",
   features = [ "inline-asm" ],
@@ -20,7 +27,3 @@ embassy-rp = {
     "executor-interrupt",
   ],
 }
-embassy-executor = { workspace = true }
-embassy-time = { workspace = true }
-embassy-futures = { workspace = true }
-panic-halt = { workspace = true }
