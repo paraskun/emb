@@ -17,7 +17,7 @@ use embedded_io_async::Write;
 
 static DEV_ADDR: u8 = 0x42;
 static DIV: u8 = 15;
-static PAGE: &[u8] = include_bytes!("./index.html.gz");
+static PAGE: &[u8] = include_bytes!(concat!(env!("OUT_DIR"), "/index.html.gz"));
 static STACK_RESOURCES: StaticCell<StackResources<3>> = StaticCell::new();
 
 esp_bootloader_esp_idf::esp_app_desc!();
@@ -95,13 +95,9 @@ async fn main(spawner: Spawner) {
 
         match path {
             "/" => {
-                sock.write_all("
-                    HTTP/1.1 200 OK\r\n\
-                    Content-Type: text/html\r\n\
-                    Content-Encoding: gzip\r\n\
-                    Content-Length: 479\r\n\
-                    Connection: close\r\n\
-                    \r\n".as_bytes());
+                let mut hdr = [0u8; 128];
+                let n = fmt_200(&mut hdr, PAGE.len());
+                sock.write_all(&hdr[..n]);
                 sock.write_all(PAGE);
             }
             _ => {
@@ -127,6 +123,27 @@ async fn main(spawner: Spawner) {
 
         let _ = sock.flush().await;
         sock.close();
+    }
+}
+
+fn fmt_200(buf: &mut [u8], content_len: usize) -> usize {
+    use core::fmt::Write;
+    let mut w = BufWriter { buf, pos: 0 };
+    write!(w, "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nContent-Encoding: gzip\r\nContent-Length: {content_len}\r\nConnection: close\r\n\r\n").unwrap();
+    w.pos
+}
+
+struct BufWriter<'a> {
+    buf: &'a mut [u8],
+    pos: usize,
+}
+
+impl core::fmt::Write for BufWriter<'_> {
+    fn write_str(&mut self, s: &str) -> core::fmt::Result {
+        let bytes = s.as_bytes();
+        self.buf[self.pos..self.pos + bytes.len()].copy_from_slice(bytes);
+        self.pos += bytes.len();
+        Ok(())
     }
 }
 

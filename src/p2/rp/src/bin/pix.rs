@@ -11,7 +11,7 @@ use embassy_rp::pio;
 use embassy_rp::peripherals;
 use panic_halt as _;
 
-use rp2040::pal::pix::{Pix, Color};
+use p2::pal::pix::{Pix, Color};
 
 const DEV_ADDR: u8 = 0x42;
 

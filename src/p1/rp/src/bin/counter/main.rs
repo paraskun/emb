@@ -9,7 +9,7 @@ use embassy_time::Timer;
 use embassy_futures::select;
 use panic_halt as _;
 
-use rp2040::pal::led::{Led};
+use p1::pal::led::{Led};
 
 embassy_rp::bind_interrupts!(struct Irqs {
     PIO0_IRQ_0 => pio::InterruptHandler<peripherals::PIO0>;

@@ -30,11 +30,11 @@ pub struct Led<'a, PIO: pio::Instance> {
 impl<'a, PIO: pio::Instance> Led<'a, PIO> {
     pub fn new(
         mut pio: pio::Pio<'a, PIO>,
-    
+
         dat: Peri<'a, impl pio::PioPin>,
         clk: Peri<'a, impl pio::PioPin>,
         lat: Peri<'a, impl pio::PioPin>,
-    
+
         d1: Peri<'a, impl pio::PioPin>,
         d2: Peri<'a, impl pio::PioPin>,
         d3: Peri<'a, impl pio::PioPin>,
@@ -43,18 +43,18 @@ impl<'a, PIO: pio::Instance> Led<'a, PIO> {
         let dat_pin = pio.common.make_pio_pin(dat);
         let clk_pin = pio.common.make_pio_pin(clk);
         let lat_pin = pio.common.make_pio_pin(lat);
-    
+
         let d1_pin = pio.common.make_pio_pin(d1);
         let d2_pin = pio.common.make_pio_pin(d2);
         let d3_pin = pio.common.make_pio_pin(d3);
         let d4_pin = pio.common.make_pio_pin(d4);
-    
+
         let prg = pio::program::pio_asm!("
         .side_set 2
         .wrap_target
             pull noblock        side 0b00 [1]
             mov x, osr          side 0b00 [1]
-        
+
             set pins, 0b1111    side 0b00 [1]
             set y, 7            side 0b00 [1]
         loop1:
@@ -63,7 +63,7 @@ impl<'a, PIO: pio::Instance> Led<'a, PIO> {
             jmp y-- loop1       side 0b00 [1]
             nop                 side 0b10 [1] ; latch
             set pins, 0b0111    side 0b00 [3]
-        
+
             set pins, 0b1111    side 0b00 [1]
             set y, 7            side 0b00 [1]
         loop2:
@@ -72,7 +72,7 @@ impl<'a, PIO: pio::Instance> Led<'a, PIO> {
             jmp y-- loop2       side 0b00 [1]
             nop                 side 0b10 [1] ; latch
             set pins, 0b1011    side 0b00 [3]
-        
+
             set pins, 0b1111    side 0b00 [1]
             set y, 7            side 0b00 [1]
         loop3:
@@ -81,7 +81,7 @@ impl<'a, PIO: pio::Instance> Led<'a, PIO> {
             jmp y-- loop3       side 0b00 [1]
             nop                 side 0b10 [1] ; latch
             set pins, 0b1101    side 0b00 [3]
-        
+
             set pins, 0b1111    side 0b00 [1]
             set y, 7            side 0b00 [1]
         loop4:
@@ -92,13 +92,13 @@ impl<'a, PIO: pio::Instance> Led<'a, PIO> {
             set pins, 0b1110    side 0b00 [1]
         .wrap
         ");
-    
+
         let mut cfg = pio::Config::default();
         cfg.use_program(&pio.common.load_program(&prg.program), &[&clk_pin, &lat_pin]);
         cfg.set_out_pins(&[&dat_pin]);
         cfg.set_set_pins(&[&d1_pin, &d2_pin, &d3_pin, &d4_pin]);
         cfg.clock_divider = 200u16.into();
-    
+
         pio.sm0.set_config(&cfg);
         pio.sm0.set_pin_dirs(pio::Direction::Out, &[
             &dat_pin,
@@ -110,7 +110,7 @@ impl<'a, PIO: pio::Instance> Led<'a, PIO> {
             &d4_pin,
         ]);
         pio.sm0.set_enable(true);
-    
+
         Led {
             pio: pio,
             dig: [Digit::new(0), Digit::new(0), Digit::new(0), Digit::new(0)],

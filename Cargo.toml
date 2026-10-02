@@ -1,10 +1,16 @@
 [workspace]
 resolver = "3"
 members = [
-  "rp2040",
-  "esp32c3",
+  "xtask",
+  "src/*/*",
   "shared",
 ]
+
+default-members = [ "xtask" ]
+
+[workspace.package]
+edition = "2024"
+version = "0.0.0"
 
 [workspace.dependencies]
 embassy-executor = { version = "0.10.0" }
