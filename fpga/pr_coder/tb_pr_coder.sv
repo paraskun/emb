@@ -8,7 +8,7 @@ module tb_pr_coder();
   pr_coder DUT(.a(a), .f(f));
   
   initial begin
-    $dumpfile("out/sim.vcd");
+    $dumpfile("out/pr_coder/sim.vcd");
     $dumpvars(0, tb_pr_coder);
 
     a = 8'b11111111;  #10;

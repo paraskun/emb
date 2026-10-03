@@ -9,7 +9,7 @@ module tb_mux8();
   mux8 DUT(.a(a), .s(s), .f(f));
   
   initial begin
-    $dumpfile("out/sim.vcd");
+    $dumpfile("out/mux8/sim.vcd");
     $dumpvars(0, tb_mux8);
 
     s = 0; a = 8'b00000001;         #10;

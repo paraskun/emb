@@ -8,7 +8,7 @@ module tb_coder();
   coder DUT(.a(a), .f(f));
   
   initial begin
-    $dumpfile("out/sim.vcd");
+    $dumpfile("out/coder/sim.vcd");
     $dumpvars(0, tb_coder);
 
     a = 8'b00000001;  #10;

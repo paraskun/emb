@@ -9,7 +9,7 @@ module tb_mux16();
   mux16 DUT(.a(a), .s(s), .f(f));
   
   initial begin
-    $dumpfile("out/sim.vcd");
+    $dumpfile("out/mux16/sim.vcd");
     $dumpvars(0, tb_mux16);
 
     s = 0; a = 16'b0000000000000001; #10;

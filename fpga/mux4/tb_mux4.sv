@@ -9,7 +9,7 @@ module tb_mux4();
   mux4 DUT(.a(a), .s(s), .f(f));
   
   initial begin
-    $dumpfile("out/sim.vcd");
+    $dumpfile("out/mux4/sim.vcd");
     $dumpvars(0, tb_mux4);
 
     s = 0; a = 4'b0001;             #10;

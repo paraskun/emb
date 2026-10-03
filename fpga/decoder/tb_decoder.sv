@@ -8,7 +8,7 @@ module tb_decoder();
   decoder DUT(.a(a), .f(f));
   
   initial begin
-    $dumpfile("out/sim.vcd");
+    $dumpfile("out/decoder/sim.vcd");
     $dumpvars(0, tb_decoder);
 
     a = 3'b000;       #10;

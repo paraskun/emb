@@ -9,7 +9,7 @@ module tb_mux2();
   mux2 DUT(.a(a), .s(s), .f(f));
   
   initial begin
-    $dumpfile("out/sim.vcd");
+    $dumpfile("out/mux2/sim.vcd");
     $dumpvars(0, tb_mux2);
 
     s = 0; a = 2'b10; #10;

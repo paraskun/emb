@@ -10,7 +10,7 @@ module tb_cmp4();
   cmp4 DUT(.a(a), .b(b), .m(m), .l(l));
   
   initial begin
-    $dumpfile("out/sim.vcd");
+    $dumpfile("out/cmp4/sim.vcd");
     $dumpvars(0, tb_cmp2);
 
     {a, b} = 8'b0;         #10;
