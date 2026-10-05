@@ -29,3 +29,5 @@ embassy-rp = {
     "executor-interrupt",
   ],
 }
+embedded-graphics = "0.8.2"
+ssd1306 = { version = "0.10.0", features = [ "async" ] }
