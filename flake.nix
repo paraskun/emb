@@ -29,6 +29,8 @@
               espflash
               elf2uf2-rs
               picotool
+              tio
+              python3
             ];
           };
         });

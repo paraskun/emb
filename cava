@@ -1,0 +1,11 @@
+[general]
+bars = 8
+framerate = 60
+
+[output]
+method = raw
+raw_target = /dev/stdout
+data_format = binary
+bit_format = 8bit
+channels = mono
+mono_option = average
